@@ -1,32 +1,29 @@
 import React, { Component } from 'react';
 import './App.css';
-import UserInput from './User/UserInput';
-import UserOutput from './User/UserOutput';
+
+import UserInput from './UserInput/UserInput';
+import UserOutput from './UserOutput/UserOutput';
 
 class App extends Component {
   state = {
-    users: [
-      {username: ''}
-    ]
+    username: 'TreeSong'
   }
   
-  newUsernameHandler = (newUsername) => {
-    this.setState({
-      users: [
-        { username: newUsername }
-      ]
-    });
+  // Use arrow function if you using 'this' to refer a class
+  newUsernameChangedHandler = (newUsername) => {
+    this.setState({ username: newUsername.target.value});
   }
   
   render() {
     return (
       <div className="App">
         <h1>User I/O</h1>
-        <UserInput />
-        <UserOutput 
-        click={this.newUsernameHandler.bind(this, 'Yes')} />
-        <button onClick={() => this.newUsernameHandler('song')}>Switch Name</button>
-        
+        <UserInput 
+          changed={this.newUsernameChangedHandler}
+          currentName={this.state.username}/>
+        <UserOutput userName={this.state.username} />
+        <UserOutput userName="Roy" />
+        <UserOutput userName="Cool" />
       </div>
     );
   }
